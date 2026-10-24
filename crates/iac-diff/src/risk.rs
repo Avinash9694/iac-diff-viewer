@@ -290,7 +290,7 @@ pub fn assess(diff: &ResourceDiff) -> Assessment {
             evaluate_changes(diff, &diff.changes, &mut findings);
         }
     }
-    findings.sort_by(|a, b| b.0.cmp(&a.0));
+    findings.sort_by_key(|f| std::cmp::Reverse(f.0));
     let risk = findings.first().map(|f| f.0).unwrap_or(Risk::Low);
     let mut reasons: Vec<String> = Vec::new();
     for (_, reason) in findings {
