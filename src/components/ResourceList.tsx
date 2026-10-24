@@ -10,7 +10,7 @@ import styles from './List.module.css';
 interface ResourceListProps {
   groups: ResourceGroup[];
   selectedKey: string | null;
-  onSelect: (key: string) => void;
+  onSelect: (key: string, source: 'pointer' | 'keyboard') => void;
 }
 
 export function ResourceList({ groups, selectedKey, onSelect }: ResourceListProps) {
@@ -30,7 +30,7 @@ export function ResourceList({ groups, selectedKey, onSelect }: ResourceListProp
     if (!target) return;
     const key = resourceKey(target);
     pendingFocus.current = key;
-    onSelect(key);
+    onSelect(key, 'keyboard');
   };
 
   const onKeyDown = (e: KeyboardEvent<HTMLDivElement>) => {
@@ -109,7 +109,7 @@ export function ResourceList({ groups, selectedKey, onSelect }: ResourceListProp
                     aria-selected={selected}
                     tabIndex={selected ? 0 : -1}
                     className={`${styles.item}${selected ? ` ${styles.itemSelected}` : ''}`}
-                    onClick={() => onSelect(key)}
+                    onClick={() => onSelect(key, 'pointer')}
                   >
                     <OpChip
                       op={r.op}

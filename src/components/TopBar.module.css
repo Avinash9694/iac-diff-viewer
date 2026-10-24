@@ -64,7 +64,17 @@
   }
 
   .controls {
+    order: 1;
     width: 100%;
+  }
+
+  .sampleLabel {
+    flex-basis: 100%;
+  }
+
+  .controls > button {
+    flex: 1 1 auto;
+    justify-content: center;
   }
 
   .group {
@@ -74,5 +84,31 @@
   .group > button {
     flex: 1;
     justify-content: center;
+  }
+}
+
+.themeBtn {
+  order: 3;
+  flex-shrink: 0;
+}
+
+@media (max-width: 720px) {
+  .brand {
+    flex: 1 1 0;
+    min-width: 0;
+  }
+
+  .brand > div {
+    min-width: 0;
+  }
+
+  .subtitle {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .themeBtn {
+    order: 0;
   }
 }

@@ -61,7 +61,6 @@ export function TopBar(props: TopBarProps) {
             ))}
           </select>
         </label>
-
         <button
           type="button"
           className="btn"
@@ -82,7 +81,6 @@ export function TopBar(props: TopBarProps) {
           </svg>
           {editorsOpen ? 'Hide documents' : 'Edit documents'}
         </button>
-
         <button type="button" className="btn" onClick={onSwap} title="Swap before and after">
           <svg
             viewBox="0 0 20 20"
@@ -97,7 +95,6 @@ export function TopBar(props: TopBarProps) {
           </svg>
           Swap
         </button>
-
         <div className={styles.group} role="group" aria-label="Export report">
           <button type="button" className="btn" disabled={!canExport} onClick={onCopyMarkdown}>
             Copy Markdown
@@ -111,42 +108,42 @@ export function TopBar(props: TopBarProps) {
             Download .md
           </button>
         </div>
-
-        <button
-          type="button"
-          className="btn btn--icon btn--ghost"
-          onClick={onToggleTheme}
-          aria-label={theme === 'dark' ? 'Switch to light theme' : 'Switch to dark theme'}
-          title={theme === 'dark' ? 'Switch to light theme' : 'Switch to dark theme'}
-        >
-          {theme === 'dark' ? (
-            <svg
-              viewBox="0 0 20 20"
-              width="18"
-              height="18"
-              aria-hidden="true"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="1.6"
-            >
-              <circle cx="10" cy="10" r="3.5" />
-              <path d="M10 2v2M10 16v2M2 10h2M16 10h2M4.3 4.3l1.4 1.4M14.3 14.3l1.4 1.4M4.3 15.7l1.4-1.4M14.3 5.7l1.4-1.4" />
-            </svg>
-          ) : (
-            <svg
-              viewBox="0 0 20 20"
-              width="18"
-              height="18"
-              aria-hidden="true"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="1.6"
-            >
-              <path d="M16.5 12.5A7 7 0 0 1 7.5 3.5a7 7 0 1 0 9 9z" />
-            </svg>
-          )}
-        </button>
       </div>
+
+      <button
+        type="button"
+        className={`btn btn--icon btn--ghost ${styles.themeBtn}`}
+        onClick={onToggleTheme}
+        aria-label={theme === 'dark' ? 'Switch to light theme' : 'Switch to dark theme'}
+        title={theme === 'dark' ? 'Switch to light theme' : 'Switch to dark theme'}
+      >
+        {theme === 'dark' ? (
+          <svg
+            viewBox="0 0 20 20"
+            width="18"
+            height="18"
+            aria-hidden="true"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="1.6"
+          >
+            <circle cx="10" cy="10" r="3.5" />
+            <path d="M10 2v2M10 16v2M2 10h2M16 10h2M4.3 4.3l1.4 1.4M14.3 14.3l1.4 1.4M4.3 15.7l1.4-1.4M14.3 5.7l1.4-1.4" />
+          </svg>
+        ) : (
+          <svg
+            viewBox="0 0 20 20"
+            width="18"
+            height="18"
+            aria-hidden="true"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="1.6"
+          >
+            <path d="M16.5 12.5A7 7 0 0 1 7.5 3.5a7 7 0 1 0 9 9z" />
+          </svg>
+        )}
+      </button>
     </header>
   );
 }

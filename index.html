@@ -28,7 +28,8 @@
     <script>
       (function () {
         try {
-          var t = localStorage.getItem('iac-diff-theme');
+          var q = new URLSearchParams(location.search).get('theme');
+          var t = q || localStorage.getItem('iac-diff-theme');
           if (t === 'dark' || t === 'light') document.documentElement.dataset.theme = t;
         } catch (e) {
           /* storage unavailable */

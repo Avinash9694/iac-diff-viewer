@@ -57,6 +57,7 @@ export function App() {
   const [selectedKey, setSelectedKey] = useState<string | null>(null);
   const [toast, setToast] = useState<string | null>(null);
   const searchRef = useRef<HTMLInputElement>(null);
+  const detailRef = useRef<HTMLDivElement>(null);
 
   const debouncedBefore = useDebouncedValue(before, 250);
   const debouncedAfter = useDebouncedValue(after, 250);
@@ -122,6 +123,14 @@ export function App() {
     if (side === 'before') setBefore(text);
     else setAfter(text);
   };
+
+  const selectResource = useCallback((key: string, source: 'pointer' | 'keyboard') => {
+    setSelectedKey(key);
+    // Stacked layout: a tap on a row should land the user on the detail it opened.
+    if (source === 'pointer' && window.matchMedia?.('(max-width: 900px)').matches) {
+      detailRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  }, []);
 
   const swap = () => {
     setBefore(after);
@@ -272,10 +281,10 @@ export function App() {
               <ResourceList
                 groups={groups}
                 selectedKey={selected ? resourceKey(selected) : null}
-                onSelect={setSelectedKey}
+                onSelect={selectResource}
               />
             </aside>
-            <div className={`${styles.detailPane} card`}>
+            <div ref={detailRef} className={`${styles.detailPane} card`}>
               <DetailPane resource={selected} />
             </div>
           </main>

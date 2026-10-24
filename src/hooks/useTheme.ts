@@ -7,7 +7,9 @@ const STORAGE_KEY = 'iac-diff-theme';
 
 function readStored(): ThemeChoice {
   try {
-    const v = localStorage.getItem(STORAGE_KEY);
+    // `?theme=dark|light` wins for the session (shareable links, screenshots); storage otherwise.
+    const fromUrl = new URLSearchParams(window.location.search).get('theme');
+    const v = fromUrl ?? localStorage.getItem(STORAGE_KEY);
     return v === 'dark' || v === 'light' ? v : 'system';
   } catch {
     return 'system';
