@@ -1,0 +1,399 @@
+:root {
+  color-scheme: dark;
+
+  --font-ui: 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
+
+  --bg: #0b0f0d;
+  --surface: #111714;
+  --surface-2: #171f1b;
+  --surface-3: #1e2824;
+  --border: #243029;
+  --border-strong: #324139;
+  --text: #e8ece9;
+  --text-muted: #97a39d;
+  --text-faint: #66736d;
+
+  --accent: #34d399;
+  --accent-strong: #10b981;
+  --accent-contrast: #052e22;
+  --accent-soft: rgba(52, 211, 153, 0.14);
+  --focus: #6ee7b7;
+
+  --risk-critical: #f87171;
+  --risk-critical-soft: rgba(248, 113, 113, 0.14);
+  --risk-high: #fb923c;
+  --risk-high-soft: rgba(251, 146, 60, 0.14);
+  --risk-medium: #fbbf24;
+  --risk-medium-soft: rgba(251, 191, 36, 0.14);
+  --risk-low: #7dd3fc;
+  --risk-low-soft: rgba(125, 211, 252, 0.14);
+
+  --op-added: #34d399;
+  --op-added-soft: rgba(52, 211, 153, 0.16);
+  --op-removed: #f87171;
+  --op-removed-soft: rgba(248, 113, 113, 0.16);
+  --op-modified: #fbbf24;
+  --op-modified-soft: rgba(251, 191, 36, 0.16);
+  --op-renamed: #c4b5fd;
+  --op-renamed-soft: rgba(196, 181, 253, 0.16);
+  --op-unchanged: #7b8782;
+  --op-unchanged-soft: rgba(123, 135, 130, 0.14);
+
+  --shadow: 0 1px 2px rgba(0, 0, 0, 0.35), 0 8px 24px rgba(0, 0, 0, 0.25);
+  --radius: 12px;
+  --radius-sm: 8px;
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 24px;
+  --space-6: 32px;
+  --topbar-height: 56px;
+}
+
+:root[data-theme='light'] {
+  color-scheme: light;
+  --bg: #f4f7f5;
+  --surface: #ffffff;
+  --surface-2: #eef2f0;
+  --surface-3: #e3e9e6;
+  --border: #d8e0dc;
+  --border-strong: #c3cdc8;
+  --text: #0f1f18;
+  --text-muted: #55655e;
+  --text-faint: #7a8982;
+  --accent: #059669;
+  --accent-strong: #047857;
+  --accent-contrast: #ffffff;
+  --accent-soft: rgba(5, 150, 105, 0.12);
+  --focus: #047857;
+  --risk-critical: #b91c1c;
+  --risk-critical-soft: rgba(185, 28, 28, 0.1);
+  --risk-high: #c2410c;
+  --risk-high-soft: rgba(194, 65, 12, 0.1);
+  --risk-medium: #a16207;
+  --risk-medium-soft: rgba(161, 98, 7, 0.12);
+  --risk-low: #0369a1;
+  --risk-low-soft: rgba(3, 105, 161, 0.1);
+  --op-added: #047857;
+  --op-added-soft: rgba(4, 120, 87, 0.12);
+  --op-removed: #b91c1c;
+  --op-removed-soft: rgba(185, 28, 28, 0.1);
+  --op-modified: #a16207;
+  --op-modified-soft: rgba(161, 98, 7, 0.12);
+  --op-renamed: #6d28d9;
+  --op-renamed-soft: rgba(109, 40, 217, 0.1);
+  --op-unchanged: #6b7a74;
+  --op-unchanged-soft: rgba(107, 122, 116, 0.12);
+  --shadow: 0 1px 2px rgba(15, 31, 24, 0.06), 0 8px 24px rgba(15, 31, 24, 0.06);
+}
+
+@media (prefers-color-scheme: light) {
+  :root:not([data-theme='dark']) {
+    color-scheme: light;
+    --bg: #f4f7f5;
+    --surface: #ffffff;
+    --surface-2: #eef2f0;
+    --surface-3: #e3e9e6;
+    --border: #d8e0dc;
+    --border-strong: #c3cdc8;
+    --text: #0f1f18;
+    --text-muted: #55655e;
+    --text-faint: #7a8982;
+    --accent: #059669;
+    --accent-strong: #047857;
+    --accent-contrast: #ffffff;
+    --accent-soft: rgba(5, 150, 105, 0.12);
+    --focus: #047857;
+    --risk-critical: #b91c1c;
+    --risk-critical-soft: rgba(185, 28, 28, 0.1);
+    --risk-high: #c2410c;
+    --risk-high-soft: rgba(194, 65, 12, 0.1);
+    --risk-medium: #a16207;
+    --risk-medium-soft: rgba(161, 98, 7, 0.12);
+    --risk-low: #0369a1;
+    --risk-low-soft: rgba(3, 105, 161, 0.1);
+    --op-added: #047857;
+    --op-added-soft: rgba(4, 120, 87, 0.12);
+    --op-removed: #b91c1c;
+    --op-removed-soft: rgba(185, 28, 28, 0.1);
+    --op-modified: #a16207;
+    --op-modified-soft: rgba(161, 98, 7, 0.12);
+    --op-renamed: #6d28d9;
+    --op-renamed-soft: rgba(109, 40, 217, 0.1);
+    --op-unchanged: #6b7a74;
+    --op-unchanged-soft: rgba(107, 122, 116, 0.12);
+    --shadow: 0 1px 2px rgba(15, 31, 24, 0.06), 0 8px 24px rgba(15, 31, 24, 0.06);
+  }
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: var(--font-ui);
+  font-size: 14px;
+  line-height: 1.5;
+  color: var(--text);
+  background: var(--bg);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+h1,
+h2,
+h3,
+p {
+  margin: 0;
+}
+
+button,
+input,
+select,
+textarea {
+  font: inherit;
+  color: inherit;
+}
+
+a {
+  color: var(--accent);
+}
+
+code,
+pre,
+.mono {
+  font-family: var(--font-mono);
+  font-size: 12.5px;
+}
+
+:focus-visible {
+  outline: 2px solid var(--focus);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* ---- shared primitives ---- */
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  min-height: 40px;
+  padding: 0 var(--space-3);
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-sm);
+  background: var(--surface-2);
+  color: var(--text);
+  font-weight: 500;
+  cursor: pointer;
+  white-space: nowrap;
+  transition:
+    background-color 120ms ease,
+    border-color 120ms ease;
+}
+
+.btn:hover {
+  background: var(--surface-3);
+}
+
+.btn:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+.btn--primary {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: var(--accent-contrast);
+}
+
+.btn--primary:hover {
+  background: var(--accent-strong);
+  border-color: var(--accent-strong);
+}
+
+.btn--ghost {
+  background: transparent;
+  border-color: transparent;
+  color: var(--text-muted);
+}
+
+.btn--ghost:hover {
+  background: var(--surface-2);
+  color: var(--text);
+}
+
+.btn--icon {
+  width: 40px;
+  padding: 0;
+  justify-content: center;
+}
+
+.btn--sm {
+  min-height: 32px;
+  padding: 0 var(--space-2);
+  font-size: 13px;
+}
+
+.field {
+  min-height: 40px;
+  padding: 0 var(--space-3);
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-sm);
+  background: var(--surface);
+  color: var(--text);
+}
+
+.field::placeholder {
+  color: var(--text-faint);
+}
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 2px 8px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  line-height: 18px;
+  white-space: nowrap;
+}
+
+.badge--critical {
+  color: var(--risk-critical);
+  background: var(--risk-critical-soft);
+}
+
+.badge--high {
+  color: var(--risk-high);
+  background: var(--risk-high-soft);
+}
+
+.badge--medium {
+  color: var(--risk-medium);
+  background: var(--risk-medium-soft);
+}
+
+.badge--low {
+  color: var(--risk-low);
+  background: var(--risk-low-soft);
+}
+
+.badge--dot::before {
+  content: '';
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: currentColor;
+}
+
+.chip {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 20px;
+  height: 20px;
+  padding: 0 5px;
+  border-radius: 5px;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 1;
+}
+
+.chip--added {
+  color: var(--op-added);
+  background: var(--op-added-soft);
+}
+
+.chip--removed {
+  color: var(--op-removed);
+  background: var(--op-removed-soft);
+}
+
+.chip--modified {
+  color: var(--op-modified);
+  background: var(--op-modified-soft);
+}
+
+.chip--renamed {
+  color: var(--op-renamed);
+  background: var(--op-renamed-soft);
+}
+
+.chip--unchanged {
+  color: var(--op-unchanged);
+  background: var(--op-unchanged-soft);
+}
+
+.toggle {
+  display: inline-flex;
+  align-items: center;
+  min-height: 32px;
+  padding: 0 10px;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  background: var(--surface);
+  color: var(--text-muted);
+  font-size: 12.5px;
+  font-weight: 500;
+  cursor: pointer;
+  gap: 6px;
+}
+
+.toggle:hover {
+  border-color: var(--border-strong);
+  color: var(--text);
+}
+
+.toggle[aria-pressed='true'] {
+  background: var(--accent-soft);
+  border-color: var(--accent);
+  color: var(--text);
+}
+
+.card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+}
+
+.muted {
+  color: var(--text-muted);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

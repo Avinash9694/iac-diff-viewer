@@ -1,0 +1,94 @@
+.strip {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-3) var(--space-5);
+  margin: var(--space-3) var(--space-4) 0;
+  padding: var(--space-3) var(--space-4);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+}
+
+.overall {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.overallLabel {
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--text-muted);
+}
+
+.overallBadge {
+  font-size: 14px;
+  padding: 4px 12px;
+  line-height: 20px;
+}
+
+.docs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2) var(--space-5);
+  margin: 0;
+  min-width: 0;
+}
+
+.docs dt {
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--text-muted);
+}
+
+.docs dd {
+  margin: 0;
+  font-size: 13px;
+}
+
+.counts {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2) var(--space-3);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.count {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+}
+
+.count[data-zero='true'] {
+  opacity: 0.5;
+}
+
+.countValue {
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+}
+
+.countLabel {
+  color: var(--text-muted);
+  text-transform: capitalize;
+}
+
+@media (max-width: 720px) {
+  .strip {
+    margin: var(--space-3) var(--space-3) 0;
+    padding: var(--space-3);
+    gap: var(--space-3);
+  }
+
+  .countLabel {
+    display: none;
+  }
+}
