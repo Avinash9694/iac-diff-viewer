@@ -143,11 +143,25 @@ const SET_ELEMENT_PAIR_THRESHOLD: f64 = 0.5;
 
 const IDENTITY_FIELDS: &[&str] = &["Key", "key", "Sid", "sid", "Name", "name", "Id", "id"];
 
-fn identity(value: &Value) -> Option<(&str, &str)> {
+fn identity(value: &Value) -> Option<String> {
     let obj = value.as_object()?;
-    IDENTITY_FIELDS
-        .iter()
-        .find_map(|f| obj.get(*f).and_then(Value::as_str).map(|v| (*f, v)))
+    if let Some(found) = IDENTITY_FIELDS.iter().find_map(|f| {
+        obj.get(*f)
+            .and_then(Value::as_str)
+            .map(|v| format!("{f}={v}"))
+    }) {
+        return Some(found);
+    }
+    // Security group rules carry no name: protocol + port range is what identifies one.
+    let from = obj.get("FromPort").or_else(|| obj.get("from_port"))?;
+    let to = obj.get("ToPort").or_else(|| obj.get("to_port"))?;
+    let proto = obj
+        .get("IpProtocol")
+        .or_else(|| obj.get("protocol"))
+        .or_else(|| obj.get("ip_protocol"))
+        .map(Value::to_string)
+        .unwrap_or_default();
+    Some(format!("ports={proto}:{from}-{to}"))
 }
 
 /// Order-insensitive multiset comparison: equal elements cancel out, similar
@@ -497,5 +511,45 @@ mod tests {
         let b: Vec<Value> = ["a", "b", "c", "d"].iter().map(|s| json!(s)).collect();
         let a: Vec<Value> = ["b", "d", "a"].iter().map(|s| json!(s)).collect();
         assert_eq!(lcs_pairs(&b, &a), vec![(1, 0), (3, 1)]);
+    }
+}
+
+#[cfg(test)]
+mod identity_tests {
+    use super::*;
+    use serde_json::json;
+
+    #[test]
+    fn ingress_rules_pair_by_protocol_and_port_range() {
+        let changes = diff_values(
+            &json!({"SecurityGroupIngress": [
+                {"IpProtocol": "tcp", "FromPort": 443, "ToPort": 443, "CidrIp": "0.0.0.0/0"},
+                {"IpProtocol": "tcp", "FromPort": 22, "ToPort": 22, "CidrIp": "10.0.0.0/8", "Description": "corp"}
+            ]}),
+            &json!({"SecurityGroupIngress": [
+                {"IpProtocol": "tcp", "FromPort": 443, "ToPort": 443, "CidrIp": "0.0.0.0/0"},
+                {"IpProtocol": "tcp", "FromPort": 22, "ToPort": 22, "CidrIp": "0.0.0.0/0", "Description": "temporary"}
+            ]}),
+        );
+        let paths: Vec<&str> = changes.iter().map(|c| c.path.as_str()).collect();
+        assert_eq!(
+            paths,
+            vec![
+                "SecurityGroupIngress[1].CidrIp",
+                "SecurityGroupIngress[1].Description"
+            ]
+        );
+        assert!(changes.iter().all(|c| c.op == ChangeOp::Modified));
+    }
+
+    #[test]
+    fn different_port_ranges_are_different_rules() {
+        let changes = diff_values(
+            &json!({"ingress": [{"protocol": "tcp", "from_port": 22, "to_port": 22, "cidr_blocks": ["10.0.0.0/8"]}]}),
+            &json!({"ingress": [{"protocol": "tcp", "from_port": 80, "to_port": 80, "cidr_blocks": ["10.0.0.0/8"]}]}),
+        );
+        assert_eq!(changes.len(), 2);
+        assert_eq!(changes[0].op, ChangeOp::Removed);
+        assert_eq!(changes[1].op, ChangeOp::Added);
     }
 }
