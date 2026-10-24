@@ -43,7 +43,14 @@
               }
             ],
             "egress": [
-              { "from_port": 0, "to_port": 0, "protocol": "-1", "cidr_blocks": ["0.0.0.0/0"], "ipv6_cidr_blocks": [], "description": "" }
+              {
+                "from_port": 0,
+                "to_port": 0,
+                "protocol": "-1",
+                "cidr_blocks": ["0.0.0.0/0"],
+                "ipv6_cidr_blocks": [],
+                "description": ""
+              }
             ],
             "tags": { "Name": "web" },
             "tags_all": { "Name": "web" }
@@ -157,14 +164,63 @@
     }
   },
   "resource_changes": [
-    { "address": "aws_instance.web", "mode": "managed", "type": "aws_instance", "name": "web", "change": { "actions": ["update"] } },
-    { "address": "aws_security_group.web", "mode": "managed", "type": "aws_security_group", "name": "web", "change": { "actions": ["no-op"] } },
-    { "address": "aws_s3_bucket.logs", "mode": "managed", "type": "aws_s3_bucket", "name": "logs", "change": { "actions": ["update"] } },
-    { "address": "aws_s3_bucket_public_access_block.logs", "mode": "managed", "type": "aws_s3_bucket_public_access_block", "name": "logs", "change": { "actions": ["update"] } },
-    { "address": "aws_sqs_queue.events", "mode": "managed", "type": "aws_sqs_queue", "name": "events", "change": { "actions": ["update"] } },
-    { "address": "aws_iam_role.app", "mode": "managed", "type": "aws_iam_role", "name": "app", "change": { "actions": ["no-op"] } },
-    { "address": "aws_cloudwatch_log_group.app", "mode": "managed", "type": "aws_cloudwatch_log_group", "name": "app", "change": { "actions": ["create"] } },
-    { "address": "module.database.aws_db_instance.main", "module_address": "module.database", "mode": "managed", "type": "aws_db_instance", "name": "main", "change": { "actions": ["update"] } }
+    {
+      "address": "aws_instance.web",
+      "mode": "managed",
+      "type": "aws_instance",
+      "name": "web",
+      "change": { "actions": ["update"] }
+    },
+    {
+      "address": "aws_security_group.web",
+      "mode": "managed",
+      "type": "aws_security_group",
+      "name": "web",
+      "change": { "actions": ["no-op"] }
+    },
+    {
+      "address": "aws_s3_bucket.logs",
+      "mode": "managed",
+      "type": "aws_s3_bucket",
+      "name": "logs",
+      "change": { "actions": ["update"] }
+    },
+    {
+      "address": "aws_s3_bucket_public_access_block.logs",
+      "mode": "managed",
+      "type": "aws_s3_bucket_public_access_block",
+      "name": "logs",
+      "change": { "actions": ["update"] }
+    },
+    {
+      "address": "aws_sqs_queue.events",
+      "mode": "managed",
+      "type": "aws_sqs_queue",
+      "name": "events",
+      "change": { "actions": ["update"] }
+    },
+    {
+      "address": "aws_iam_role.app",
+      "mode": "managed",
+      "type": "aws_iam_role",
+      "name": "app",
+      "change": { "actions": ["no-op"] }
+    },
+    {
+      "address": "aws_cloudwatch_log_group.app",
+      "mode": "managed",
+      "type": "aws_cloudwatch_log_group",
+      "name": "app",
+      "change": { "actions": ["create"] }
+    },
+    {
+      "address": "module.database.aws_db_instance.main",
+      "module_address": "module.database",
+      "mode": "managed",
+      "type": "aws_db_instance",
+      "name": "main",
+      "change": { "actions": ["update"] }
+    }
   ],
   "prior_state": {
     "format_version": "1.0",
@@ -211,7 +267,14 @@
                 }
               ],
               "egress": [
-                { "from_port": 0, "to_port": 0, "protocol": "-1", "cidr_blocks": ["0.0.0.0/0"], "ipv6_cidr_blocks": [], "description": "" }
+                {
+                  "from_port": 0,
+                  "to_port": 0,
+                  "protocol": "-1",
+                  "cidr_blocks": ["0.0.0.0/0"],
+                  "ipv6_cidr_blocks": [],
+                  "description": ""
+                }
               ],
               "tags": { "Name": "web" },
               "tags_all": { "Name": "web" }

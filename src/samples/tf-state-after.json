@@ -23,7 +23,16 @@
             "request_payer": "BucketOwner",
             "acceleration_status": "",
             "server_side_encryption_configuration": [
-              { "rule": [{ "apply_server_side_encryption_by_default": [{ "sse_algorithm": "AES256", "kms_master_key_id": "" }], "bucket_key_enabled": false }] }
+              {
+                "rule": [
+                  {
+                    "apply_server_side_encryption_by_default": [
+                      { "sse_algorithm": "AES256", "kms_master_key_id": "" }
+                    ],
+                    "bucket_key_enabled": false
+                  }
+                ]
+              }
             ],
             "versioning": [{ "enabled": true, "mfa_delete": false }],
             "tags": { "Name": "static-assets", "Team": "web", "Environment": "production" },
@@ -97,10 +106,20 @@
             "price_class": "PriceClass_100",
             "default_root_object": "index.html",
             "origin": [
-              { "domain_name": "acme-static-assets.s3.eu-west-1.amazonaws.com", "origin_id": "assets", "origin_access_control_id": "E3EXAMPLEOAC" }
+              {
+                "domain_name": "acme-static-assets.s3.eu-west-1.amazonaws.com",
+                "origin_id": "assets",
+                "origin_access_control_id": "E3EXAMPLEOAC"
+              }
             ],
             "default_cache_behavior": [
-              { "target_origin_id": "assets", "viewer_protocol_policy": "redirect-to-https", "allowed_methods": ["GET", "HEAD"], "cached_methods": ["GET", "HEAD"], "compress": true }
+              {
+                "target_origin_id": "assets",
+                "viewer_protocol_policy": "redirect-to-https",
+                "allowed_methods": ["GET", "HEAD"],
+                "cached_methods": ["GET", "HEAD"],
+                "compress": true
+              }
             ],
             "viewer_certificate": [{ "cloudfront_default_certificate": true }],
             "tags": { "Team": "web" },
