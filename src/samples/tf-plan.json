@@ -1,0 +1,314 @@
+{
+  "format_version": "1.2",
+  "terraform_version": "1.9.5",
+  "planned_values": {
+    "root_module": {
+      "resources": [
+        {
+          "address": "aws_instance.web",
+          "mode": "managed",
+          "type": "aws_instance",
+          "name": "web",
+          "provider_name": "registry.terraform.io/hashicorp/aws",
+          "values": {
+            "ami": "ami-0c02fb55956c7d316",
+            "instance_type": "t3.medium",
+            "subnet_id": "subnet-0a1b2c3d4e5f60718",
+            "vpc_security_group_ids": ["sg-0f1e2d3c4b5a69788"],
+            "associate_public_ip_address": false,
+            "monitoring": true,
+            "root_block_device": [{ "volume_size": 20, "volume_type": "gp3", "encrypted": true }],
+            "tags": { "Name": "web", "Environment": "production", "Team": "platform" },
+            "tags_all": { "Name": "web", "Environment": "production", "Team": "platform" }
+          }
+        },
+        {
+          "address": "aws_security_group.web",
+          "mode": "managed",
+          "type": "aws_security_group",
+          "name": "web",
+          "provider_name": "registry.terraform.io/hashicorp/aws",
+          "values": {
+            "name": "web",
+            "description": "Web tier",
+            "vpc_id": "vpc-0123456789abcdef0",
+            "ingress": [
+              {
+                "from_port": 443,
+                "to_port": 443,
+                "protocol": "tcp",
+                "cidr_blocks": ["0.0.0.0/0"],
+                "ipv6_cidr_blocks": [],
+                "description": "HTTPS"
+              }
+            ],
+            "egress": [
+              { "from_port": 0, "to_port": 0, "protocol": "-1", "cidr_blocks": ["0.0.0.0/0"], "ipv6_cidr_blocks": [], "description": "" }
+            ],
+            "tags": { "Name": "web" },
+            "tags_all": { "Name": "web" }
+          }
+        },
+        {
+          "address": "aws_s3_bucket.logs",
+          "mode": "managed",
+          "type": "aws_s3_bucket",
+          "name": "logs",
+          "provider_name": "registry.terraform.io/hashicorp/aws",
+          "values": {
+            "bucket": "acme-prod-access-logs",
+            "force_destroy": false,
+            "object_lock_enabled": false,
+            "tags": { "Name": "access-logs", "Team": "platform", "CostCenter": "platform-ops" },
+            "tags_all": { "Name": "access-logs", "Team": "platform", "CostCenter": "platform-ops" }
+          }
+        },
+        {
+          "address": "aws_s3_bucket_public_access_block.logs",
+          "mode": "managed",
+          "type": "aws_s3_bucket_public_access_block",
+          "name": "logs",
+          "provider_name": "registry.terraform.io/hashicorp/aws",
+          "values": {
+            "bucket": "acme-prod-access-logs",
+            "block_public_acls": false,
+            "block_public_policy": false,
+            "ignore_public_acls": false,
+            "restrict_public_buckets": false
+          }
+        },
+        {
+          "address": "aws_sqs_queue.events",
+          "mode": "managed",
+          "type": "aws_sqs_queue",
+          "name": "events",
+          "provider_name": "registry.terraform.io/hashicorp/aws",
+          "values": {
+            "name": "acme-prod-events",
+            "fifo_queue": false,
+            "visibility_timeout_seconds": 60,
+            "message_retention_seconds": 345600,
+            "kms_master_key_id": null,
+            "sqs_managed_sse_enabled": false,
+            "tags": { "Team": "platform" },
+            "tags_all": { "Team": "platform" }
+          }
+        },
+        {
+          "address": "aws_iam_role.app",
+          "mode": "managed",
+          "type": "aws_iam_role",
+          "name": "app",
+          "provider_name": "registry.terraform.io/hashicorp/aws",
+          "values": {
+            "name": "acme-prod-app",
+            "path": "/",
+            "assume_role_policy": "{\"Version\":\"2012-10-17\",\"Statement\":[{\"Effect\":\"Allow\",\"Principal\":{\"Service\":\"ec2.amazonaws.com\"},\"Action\":\"sts:AssumeRole\"}]}",
+            "managed_policy_arns": ["arn:aws:iam::aws:policy/CloudWatchAgentServerPolicy"],
+            "max_session_duration": 3600,
+            "tags": { "Team": "platform" },
+            "tags_all": { "Team": "platform" }
+          }
+        },
+        {
+          "address": "aws_cloudwatch_log_group.app",
+          "mode": "managed",
+          "type": "aws_cloudwatch_log_group",
+          "name": "app",
+          "provider_name": "registry.terraform.io/hashicorp/aws",
+          "values": {
+            "name": "/acme/prod/app",
+            "retention_in_days": 30,
+            "skip_destroy": false,
+            "tags": { "Team": "platform" },
+            "tags_all": { "Team": "platform" }
+          }
+        }
+      ],
+      "child_modules": [
+        {
+          "address": "module.database",
+          "resources": [
+            {
+              "address": "module.database.aws_db_instance.main",
+              "mode": "managed",
+              "type": "aws_db_instance",
+              "name": "main",
+              "provider_name": "registry.terraform.io/hashicorp/aws",
+              "values": {
+                "identifier": "acme-prod-main",
+                "engine": "postgres",
+                "engine_version": "15.4",
+                "instance_class": "db.r6g.large",
+                "allocated_storage": 100,
+                "storage_encrypted": true,
+                "multi_az": true,
+                "publicly_accessible": false,
+                "backup_retention_period": 7,
+                "deletion_protection": true,
+                "username": "app",
+                "tags": { "Team": "platform" },
+                "tags_all": { "Team": "platform" }
+              }
+            }
+          ]
+        }
+      ]
+    }
+  },
+  "resource_changes": [
+    { "address": "aws_instance.web", "mode": "managed", "type": "aws_instance", "name": "web", "change": { "actions": ["update"] } },
+    { "address": "aws_security_group.web", "mode": "managed", "type": "aws_security_group", "name": "web", "change": { "actions": ["no-op"] } },
+    { "address": "aws_s3_bucket.logs", "mode": "managed", "type": "aws_s3_bucket", "name": "logs", "change": { "actions": ["update"] } },
+    { "address": "aws_s3_bucket_public_access_block.logs", "mode": "managed", "type": "aws_s3_bucket_public_access_block", "name": "logs", "change": { "actions": ["update"] } },
+    { "address": "aws_sqs_queue.events", "mode": "managed", "type": "aws_sqs_queue", "name": "events", "change": { "actions": ["update"] } },
+    { "address": "aws_iam_role.app", "mode": "managed", "type": "aws_iam_role", "name": "app", "change": { "actions": ["no-op"] } },
+    { "address": "aws_cloudwatch_log_group.app", "mode": "managed", "type": "aws_cloudwatch_log_group", "name": "app", "change": { "actions": ["create"] } },
+    { "address": "module.database.aws_db_instance.main", "module_address": "module.database", "mode": "managed", "type": "aws_db_instance", "name": "main", "change": { "actions": ["update"] } }
+  ],
+  "prior_state": {
+    "format_version": "1.0",
+    "terraform_version": "1.9.5",
+    "values": {
+      "root_module": {
+        "resources": [
+          {
+            "address": "aws_instance.web",
+            "mode": "managed",
+            "type": "aws_instance",
+            "name": "web",
+            "provider_name": "registry.terraform.io/hashicorp/aws",
+            "values": {
+              "ami": "ami-0c02fb55956c7d316",
+              "instance_type": "t3.micro",
+              "subnet_id": "subnet-0a1b2c3d4e5f60718",
+              "vpc_security_group_ids": ["sg-0f1e2d3c4b5a69788"],
+              "associate_public_ip_address": false,
+              "monitoring": true,
+              "root_block_device": [{ "volume_size": 20, "volume_type": "gp3", "encrypted": true }],
+              "tags": { "Name": "web", "Environment": "staging", "Team": "platform" },
+              "tags_all": { "Name": "web", "Environment": "staging", "Team": "platform" }
+            }
+          },
+          {
+            "address": "aws_security_group.web",
+            "mode": "managed",
+            "type": "aws_security_group",
+            "name": "web",
+            "provider_name": "registry.terraform.io/hashicorp/aws",
+            "values": {
+              "name": "web",
+              "description": "Web tier",
+              "vpc_id": "vpc-0123456789abcdef0",
+              "ingress": [
+                {
+                  "from_port": 443,
+                  "to_port": 443,
+                  "protocol": "tcp",
+                  "cidr_blocks": ["0.0.0.0/0"],
+                  "ipv6_cidr_blocks": [],
+                  "description": "HTTPS"
+                }
+              ],
+              "egress": [
+                { "from_port": 0, "to_port": 0, "protocol": "-1", "cidr_blocks": ["0.0.0.0/0"], "ipv6_cidr_blocks": [], "description": "" }
+              ],
+              "tags": { "Name": "web" },
+              "tags_all": { "Name": "web" }
+            }
+          },
+          {
+            "address": "aws_s3_bucket.logs",
+            "mode": "managed",
+            "type": "aws_s3_bucket",
+            "name": "logs",
+            "provider_name": "registry.terraform.io/hashicorp/aws",
+            "values": {
+              "bucket": "acme-prod-access-logs",
+              "force_destroy": false,
+              "object_lock_enabled": false,
+              "tags": { "Name": "access-logs", "Team": "platform" },
+              "tags_all": { "Name": "access-logs", "Team": "platform" }
+            }
+          },
+          {
+            "address": "aws_s3_bucket_public_access_block.logs",
+            "mode": "managed",
+            "type": "aws_s3_bucket_public_access_block",
+            "name": "logs",
+            "provider_name": "registry.terraform.io/hashicorp/aws",
+            "values": {
+              "bucket": "acme-prod-access-logs",
+              "block_public_acls": true,
+              "block_public_policy": true,
+              "ignore_public_acls": true,
+              "restrict_public_buckets": true
+            }
+          },
+          {
+            "address": "aws_sqs_queue.events",
+            "mode": "managed",
+            "type": "aws_sqs_queue",
+            "name": "events",
+            "provider_name": "registry.terraform.io/hashicorp/aws",
+            "values": {
+              "name": "acme-prod-events",
+              "fifo_queue": false,
+              "visibility_timeout_seconds": 60,
+              "message_retention_seconds": 345600,
+              "kms_master_key_id": "alias/acme-prod-events",
+              "sqs_managed_sse_enabled": false,
+              "tags": { "Team": "platform" },
+              "tags_all": { "Team": "platform" }
+            }
+          },
+          {
+            "address": "aws_iam_role.app",
+            "mode": "managed",
+            "type": "aws_iam_role",
+            "name": "app",
+            "provider_name": "registry.terraform.io/hashicorp/aws",
+            "values": {
+              "name": "acme-prod-app",
+              "path": "/",
+              "assume_role_policy": "{\"Version\":\"2012-10-17\",\"Statement\":[{\"Effect\":\"Allow\",\"Principal\":{\"Service\":\"ec2.amazonaws.com\"},\"Action\":\"sts:AssumeRole\"}]}",
+              "managed_policy_arns": ["arn:aws:iam::aws:policy/CloudWatchAgentServerPolicy"],
+              "max_session_duration": 3600,
+              "tags": { "Team": "platform" },
+              "tags_all": { "Team": "platform" }
+            }
+          }
+        ],
+        "child_modules": [
+          {
+            "address": "module.database",
+            "resources": [
+              {
+                "address": "module.database.aws_db_instance.main",
+                "mode": "managed",
+                "type": "aws_db_instance",
+                "name": "main",
+                "provider_name": "registry.terraform.io/hashicorp/aws",
+                "values": {
+                  "identifier": "acme-prod-main",
+                  "engine": "postgres",
+                  "engine_version": "15.4",
+                  "instance_class": "db.t3.small",
+                  "allocated_storage": 100,
+                  "storage_encrypted": true,
+                  "multi_az": false,
+                  "publicly_accessible": false,
+                  "backup_retention_period": 7,
+                  "deletion_protection": true,
+                  "username": "app",
+                  "tags": { "Team": "platform" },
+                  "tags_all": { "Team": "platform" }
+                }
+              }
+            ]
+          }
+        ]
+      }
+    }
+  }
+}

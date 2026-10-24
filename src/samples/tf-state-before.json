@@ -1,0 +1,137 @@
+{
+  "format_version": "1.0",
+  "terraform_version": "1.9.5",
+  "values": {
+    "root_module": {
+      "resources": [
+        {
+          "address": "aws_s3_bucket.assets",
+          "mode": "managed",
+          "type": "aws_s3_bucket",
+          "name": "assets",
+          "provider_name": "registry.terraform.io/hashicorp/aws",
+          "values": {
+            "id": "acme-static-assets",
+            "arn": "arn:aws:s3:::acme-static-assets",
+            "bucket": "acme-static-assets",
+            "bucket_domain_name": "acme-static-assets.s3.amazonaws.com",
+            "bucket_regional_domain_name": "acme-static-assets.s3.eu-west-1.amazonaws.com",
+            "region": "eu-west-1",
+            "hosted_zone_id": "Z1BKCTXD74EZPE",
+            "force_destroy": false,
+            "object_lock_enabled": false,
+            "request_payer": "BucketOwner",
+            "acceleration_status": "",
+            "server_side_encryption_configuration": [
+              { "rule": [{ "apply_server_side_encryption_by_default": [{ "sse_algorithm": "AES256", "kms_master_key_id": "" }], "bucket_key_enabled": false }] }
+            ],
+            "versioning": [{ "enabled": true, "mfa_delete": false }],
+            "tags": { "Name": "static-assets", "Team": "web", "Environment": "production" },
+            "tags_all": { "Name": "static-assets", "Team": "web", "Environment": "production" }
+          }
+        },
+        {
+          "address": "aws_s3_bucket_versioning.assets",
+          "mode": "managed",
+          "type": "aws_s3_bucket_versioning",
+          "name": "assets",
+          "provider_name": "registry.terraform.io/hashicorp/aws",
+          "values": {
+            "id": "acme-static-assets",
+            "bucket": "acme-static-assets",
+            "expected_bucket_owner": "",
+            "mfa": null,
+            "versioning_configuration": [{ "status": "Enabled", "mfa_delete": "" }]
+          }
+        },
+        {
+          "address": "aws_iam_role.app",
+          "mode": "managed",
+          "type": "aws_iam_role",
+          "name": "app",
+          "provider_name": "registry.terraform.io/hashicorp/aws",
+          "values": {
+            "id": "acme-app",
+            "arn": "arn:aws:iam::123456789012:role/acme-app",
+            "name": "acme-app",
+            "path": "/",
+            "description": "Application role",
+            "unique_id": "AROA2EXAMPLE7XQZ3K5LM",
+            "create_date": "2024-03-11T09:14:22Z",
+            "max_session_duration": 3600,
+            "force_detach_policies": false,
+            "permissions_boundary": null,
+            "assume_role_policy": "{\"Version\":\"2012-10-17\",\"Statement\":[{\"Effect\":\"Allow\",\"Principal\":{\"Service\":\"ec2.amazonaws.com\"},\"Action\":\"sts:AssumeRole\"}]}",
+            "managed_policy_arns": [
+              "arn:aws:iam::aws:policy/CloudWatchAgentServerPolicy",
+              "arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore"
+            ],
+            "tags": { "Team": "web", "Service": "app" },
+            "tags_all": { "Team": "web", "Service": "app" }
+          }
+        },
+        {
+          "address": "aws_iam_role_policy.app",
+          "mode": "managed",
+          "type": "aws_iam_role_policy",
+          "name": "app",
+          "provider_name": "registry.terraform.io/hashicorp/aws",
+          "values": {
+            "id": "acme-app:read-assets",
+            "name": "read-assets",
+            "role": "acme-app",
+            "policy": "{\"Version\":\"2012-10-17\",\"Statement\":[{\"Effect\":\"Allow\",\"Action\":[\"s3:GetObject\",\"s3:ListBucket\"],\"Resource\":[\"arn:aws:s3:::acme-static-assets\",\"arn:aws:s3:::acme-static-assets/*\"]}]}"
+          }
+        },
+        {
+          "address": "aws_cloudfront_distribution.cdn",
+          "mode": "managed",
+          "type": "aws_cloudfront_distribution",
+          "name": "cdn",
+          "provider_name": "registry.terraform.io/hashicorp/aws",
+          "values": {
+            "id": "E2QWRUHAPOMQZL",
+            "arn": "arn:aws:cloudfront::123456789012:distribution/E2QWRUHAPOMQZL",
+            "enabled": true,
+            "is_ipv6_enabled": true,
+            "price_class": "PriceClass_100",
+            "default_root_object": "index.html",
+            "origin": [
+              { "domain_name": "acme-static-assets.s3.eu-west-1.amazonaws.com", "origin_id": "assets", "origin_access_control_id": "E3EXAMPLEOAC" }
+            ],
+            "default_cache_behavior": [
+              { "target_origin_id": "assets", "viewer_protocol_policy": "redirect-to-https", "allowed_methods": ["GET", "HEAD"], "cached_methods": ["GET", "HEAD"], "compress": true }
+            ],
+            "viewer_certificate": [{ "cloudfront_default_certificate": true }],
+            "tags": { "Team": "web" },
+            "tags_all": { "Team": "web" }
+          }
+        }
+      ],
+      "child_modules": [
+        {
+          "address": "module.network",
+          "resources": [
+            {
+              "address": "module.network.aws_vpc.main",
+              "mode": "managed",
+              "type": "aws_vpc",
+              "name": "main",
+              "provider_name": "registry.terraform.io/hashicorp/aws",
+              "values": {
+                "id": "vpc-0123456789abcdef0",
+                "arn": "arn:aws:ec2:eu-west-1:123456789012:vpc/vpc-0123456789abcdef0",
+                "cidr_block": "10.0.0.0/16",
+                "enable_dns_hostnames": true,
+                "enable_dns_support": true,
+                "instance_tenancy": "default",
+                "tags": { "Name": "main" },
+                "tags_all": { "Name": "main" }
+              }
+            }
+          ]
+        }
+      ]
+    }
+  }
+}
