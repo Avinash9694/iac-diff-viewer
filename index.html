@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="color-scheme" content="dark light" />
+    <title>IaC Diff Viewer — resource-level CloudFormation & Terraform diff</title>
+    <meta
+      name="description"
+      content="Semantically diff two CloudFormation or Terraform documents at the resource level and tag every change with a risk. Rust engine compiled to WebAssembly, runs entirely in your browser."
+    />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="IaC Diff Viewer" />
+    <meta
+      property="og:description"
+      content="Resource-level diff for CloudFormation and Terraform with risk tagging. Rust → WebAssembly, nothing leaves your browser."
+    />
+    <meta property="og:url" content="https://avinash9694.github.io/iac-diff-viewer/" />
+    <meta property="og:image" content="https://avinash9694.github.io/iac-diff-viewer/og.png" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <link rel="icon" type="image/svg+xml" href="/iac-diff-viewer/favicon.svg" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <script>
+      (function () {
+        try {
+          var t = localStorage.getItem('iac-diff-theme');
+          if (t === 'dark' || t === 'light') document.documentElement.dataset.theme = t;
+        } catch (e) {
+          /* storage unavailable */
+        }
+      })();
+    </script>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>
